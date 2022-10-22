@@ -10,6 +10,8 @@ Learning interesting stuff about robotics.
 
 ## Homework 1
 
+The code for this homework can be found [here](./homework//hw1/hw1.ino).
+
 Task requirements:
 
 * there will be 3 potentiometers, each of which corresponding to an RGB color
