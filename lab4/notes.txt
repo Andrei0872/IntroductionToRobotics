@@ -1,0 +1,20 @@
+
+by default, arduino puts a 10M ohm resistence on a digital pin
+un pin are nevoie de o cantitate f mica de curent pt a putea fi activat
+  -> sol: fol rezistenta; rezGround = f mica
+  [screenshot 2]: ground ul se va umple, dupa o sa mearga spre pin
+    pull down resistor - trage valorile 'fantoma' in jos
+    
+[s3]: conexiune fara rez(circ deschis); nu e scurt, pin ul are 10M ohm rez 
+[s4]:se va duce spre ground, unde e mai usor; PB scurt -> nu avem rezistenta langa ground
+[s5]: nu se poate'; mereu deschis
+[s6]: va merge tot spre ground, nu e rez mare(la pin e rez mare); va iesi mai putin curent, e rezistenta
+[s7]: partea integrata in arduino
+[s8]
+
+* why is debounce needed?
+
+TODO:
+* INPUT_PULLUP X
+* count button press X
+* buzzer X
