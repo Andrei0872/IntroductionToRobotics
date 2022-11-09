@@ -6,6 +6,7 @@ Learning interesting stuff about robotics.
   - [Homework 1](#homework-1)
   - [Homework 2](#homework-2)
     - [Clean code thoughts](#clean-code-thoughts)
+  - [Homework 3](#homework-3)
   - [Useful resources](#useful-resources)
 
 ---
@@ -75,6 +76,21 @@ if (elapsedBuzzerTime > BUZZER_STATE3_INTERVAL_MS) {
 ```
 
 However, the problem I had encountered was that the function could not be 100% pure. As in, `beepBuzzer` might need a `beepInterval`, but 1) it can't be declared in the function's body and 2) the `beepInterval` might also be different, depending the context the function is used in(i.e. different stages require different intervals). So, I decided that it wasn't worth it.
+
+---
+
+## Homework 3
+
+
+The code for this homework can be found [here](./homework/hw32/../hw3/hw3.ino).
+
+The set-up:
+
+<div style="text-align: center;">
+  <img src="./homework/hw3/assets/IMG_5023.JPG">
+</div>
+
+The video showcasing the functionality can be found [here](https://youtu.be/K1T9R4ys6N8).
 
 ## Useful resources
 
