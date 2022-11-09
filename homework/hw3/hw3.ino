@@ -15,43 +15,20 @@ const int JOY_RIGHT_TRESHOLD = 600;
 const int JOY_TOP_TRESHOLD = 400;
 const int JOY_BOTTOM_TRESHOLD = 600;
 
-const int segSize = 8;
-int index = 0;
+const int SEGMENT_LEGTH = 8;
 bool commonAnode = false; 
 
 byte segmentOn = HIGH;
-int segments[segSize] = { 
+int segments[SEGMENT_LEGTH] = { 
   pinA, pinB, pinC, pinD, pinE, pinF, pinG, pinDP
 };
 
-const int NR_DIGITS = 10;
-const int NR_SEGMENTS = 7;
-
-int crtDigit = 0;
-
-bool joystickSwitchState = HIGH;
-bool joystickPrevSwitchState = HIGH;
-bool DPState = false;
-
-bool digitMatrix[NR_DIGITS][NR_SEGMENTS] = {
-  // a  b  c  d  e  f  g
-  {1, 1, 1, 1, 1, 1, 0}, // 0
-  {0, 1, 1, 0, 0, 0, 0}, // 1
-  {1, 1, 0, 1, 1, 0, 1}, // 2
-  {1, 1, 1, 1, 0, 0, 1}, // 3
-  {0, 1, 1, 0, 0, 1, 1}, // 4
-  {1, 0, 1, 1, 0, 1, 1}, // 5
-  {1, 0, 1, 1, 1, 1, 1}, // 6
-  {1, 1, 1, 0, 0, 0, 0}, // 7
-  {1, 1, 1, 1, 1, 1, 1}, // 8
-  {1, 1, 1, 1, 0, 1, 1}  // 9
-};
-
 const int BLINK_INTERVAL = 250;
-const int SEGMENT_LEGTH = 8;
 const int DIRECTIONS_COUNT = 4;
 
 const int DEBOUNCE_TIME_MS = 400;
+
+const int LONG_PRESS_DURATION_MS = 3000;
 
 enum FlowStates {
   State1 = 1,
@@ -82,8 +59,12 @@ int currentJoystickSwitchState = LOW;
 
 FlowStates crtFlowState = State1;
 
+unsigned long longPressTimestamp = millis();
+
+int lastJoySwState = 0;
+
 void setup() {
-  for (int i = 0; i < segSize; i++) {
+  for (int i = 0; i < SEGMENT_LEGTH; i++) {
     pinMode(segments[i], OUTPUT);
   }
 
@@ -98,9 +79,6 @@ void setup() {
   initializeDirectionMatrix();
 }
 
-
-int lastJoySwState = 0;
-
 void loop() {
   if (crtFlowState == State1) {
     showActiveSegments();
@@ -112,6 +90,8 @@ void loop() {
       isJoystickNeutral = true;
 
       lastJoySwState = joySwitchValue;
+
+      longPressTimestamp = millis();
       return;
     }
 
@@ -152,6 +132,17 @@ void loop() {
 
     if (!joySwitchValue) {
       lastJoySwState = 0;
+    } else {
+
+      unsigned long joyBtnPressDuration = millis() - longPressTimestamp;
+      if (joyBtnPressDuration > LONG_PRESS_DURATION_MS) {
+        resetActiveSegments();
+        crtSelectedSegment = pinDP;
+
+        crtFlowState = State1;
+        prevJoystickNeutralValue = isJoystickNeutral = true;
+        return;
+      }
     }
 
     int mappedPin = getMappedSegmentPin(crtSelectedSegment);
@@ -220,7 +211,6 @@ void initializeDirectionMatrix () {
 }
 
 int getMappedSegmentPin (int segmentPin) {
-  // TODO: explain
   return map(segmentPin, pinA, pinDP, 0, SEGMENT_LEGTH - 1);
 }
 
@@ -294,11 +284,21 @@ void showActiveSegments () {
       continue;
     }
     
+
     int mappedSegment = getMappedSegmentPin(segment);
     if (!activeSegments[mappedSegment]) {
       continue;
     }
 
     digitalWrite(segment, 1);
+  }
+}
+
+void resetActiveSegments () {
+  for (int i = 0; i < SEGMENT_LEGTH; i++) {
+    int segment = segments[i];
+    int mappedSegment = getMappedSegmentPin(segment);
+
+    digitalWrite(segment, activeSegments[mappedSegment] = 0);
   }
 }
