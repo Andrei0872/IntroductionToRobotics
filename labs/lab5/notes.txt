@@ -1,0 +1,5 @@
+se scrie in storage: pe RISING
+
+SHCP: fiecare rise -> shift in register
+
+D{1..4} = ground ul; cand e HIGH - nu avem circuit inchis -> nu e aprins
