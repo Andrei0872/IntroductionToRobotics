@@ -1,0 +1,17 @@
+
+[X] connect joystick
+[X] display all 0s 
+
+state1:
+[X] blink the DP of the current display
+[X] move DP blinking across X axis
+[X] press the button -> lock in the current digit -> state2
+[X] ensure axis actions are independenet, i.e. working on axis X won't allow any action on axis Y and vice versa
+[X] long pressing the button -> all digits set to 0 and crt seg digit is set to the rightmost one(e.g. DP is blinking on the rightmost digit)
+
+state2: 
+[X] DP always on
+[X] increment/decrement using the Y axis(0-15)
+[X] press the button -> state1
+[X] continuously keeping the joystick in a certain direction shouldn't continuously increment/decrement 
+[X] ensure axis actions are independenet, i.e. working on axis Y won't allow any action on axis X and vice versa

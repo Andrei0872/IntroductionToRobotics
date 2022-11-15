@@ -43,6 +43,7 @@ const int BLINK_INTERVAL = 250;
 const int DP_ENCODING = 1;
 
 const int DEBOUNCE_TIME_MS = 400;
+const int LONG_PRESS_DURATION_MS = 3000;
 
 int byteEncodings[encodingsNumber] = {
 //A B C D E F G DP 
@@ -71,6 +72,7 @@ unsigned long delayCount = 50;
 unsigned long number = 0;
 unsigned long blinkTimestamp = millis();
 unsigned long lastDebouncedTimestamp = millis();
+unsigned long longPressTimestamp = millis();
 
 bool isJoystickNeutral = true;
 
@@ -124,6 +126,8 @@ void loop() {
       if (i == crtSelectedDisplay) {
         blinkCrtSelectedDisplay();
       }
+
+      delay(3);
     }
 
     int joySwitchValue = !digitalRead(JOY_SW_PIN);
@@ -133,8 +137,10 @@ void loop() {
       lastJoySwState = joySwitchValue;
       isJoystickNeutral = true;
 
-      writeReg(byteEncodings[displaysValues[crtSelectedDisplay]]);
-      activateDisplay(crtSelectedDisplay);
+      // writeReg(byteEncodings[displaysValues[crtSelectedDisplay]]);
+      // activateDisplay(crtSelectedDisplay);
+
+      longPressTimestamp = millis();
 
       return;
     }
@@ -176,6 +182,8 @@ void loop() {
       if (i == crtSelectedDisplay) {
         writeReg(byteEncodings[value] | 1);
       }
+
+      delay(3);
     }
 
     int joySwitchValue = !digitalRead(JOY_SW_PIN);
@@ -190,6 +198,17 @@ void loop() {
 
     if (!joySwitchValue) {
       lastJoySwState = 0;
+    } else {
+      unsigned long joyBtnPressDuration = millis() - longPressTimestamp;
+      if (joyBtnPressDuration > LONG_PRESS_DURATION_MS) {
+        resetDisplays();
+      
+        crtFlowState = State1;
+        isJoystickNeutral = true;
+        lastJoysticDirection = -1;
+
+        return;
+      }
     }
 
     int direction = getDirectionFromJoystick(true);
@@ -226,6 +245,11 @@ void loop() {
     lastDebouncedTimestamp = millis();
   }
 } 
+
+void resetDisplays () {
+  initDisplaysValues();
+  crtSelectedDisplay = 0;
+}
 
 void initDisplaysValues () {
   const int DEFAULT_VALUE = 0;
