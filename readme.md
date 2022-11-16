@@ -7,6 +7,7 @@ Learning interesting stuff about robotics.
   - [Homework 2](#homework-2)
     - [Clean code thoughts](#clean-code-thoughts)
   - [Homework 3](#homework-3)
+  - [Homework 4](#homework-4)
   - [Useful resources](#useful-resources)
 
 ---
@@ -91,6 +92,21 @@ The set-up:
 </div>
 
 The video showcasing the functionality can be found [here](https://youtu.be/K1T9R4ys6N8).
+
+---
+
+## Homework 4
+
+The code for this homework can be found [here](./homework/hw32/../hw4/hw4.ino).
+
+The set-up:
+
+<div style="text-align: center;">
+  <img src="./homework/hw4/assets/IMG_5118.JPG">
+</div>
+
+The video showcasing the functionality can be found [here](https://youtube.com/shorts/RTMY486Oq6M?feature=share).
+
 
 ## Useful resources
 
