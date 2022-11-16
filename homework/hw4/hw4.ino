@@ -1,7 +1,3 @@
-//DS= [D]ata [S]torage - data
-//STCP= [ST]orage [C]lock [P]in latch
-//SHCP= [SH]ift register [C]lock [P]in clock
-
 const int latchPin = 11; // STCP to 12 on Shift Register
 const int clockPin = 10; // SHCP to 11 on Shift Register
 const int dataPin = 12; // DS to 14 on Shift Register
@@ -97,8 +93,6 @@ void setup() {
   Serial.begin(9600);
 
   initDisplaysValues();
-
-  // attachInterrupt(digitalPinToInterrupt(2), modifyDigitValue, CHANGE);
 }
 
 
@@ -106,17 +100,12 @@ bool lastBlinkState = false;
 bool shouldBlink = false;
 bool foo = true;
 
-// This corresponds to the rightmost digit, so
-// `LEFT` means incrementing and `RIGHT` decrementing.
 int displaysIdx = 0;
 
 Directions lastJoysticDirection = -1;
 int lastJoySwState = -1;
 
 void loop() {
-  // int joySwitchValue = !digitalRead(JOY_SW_PIN);
-  // Serial.println(joySwitchValue);
-
   if (crtFlowState == State1) {
     for (int i = 0; i < displayCount; i++) {
       int value = displaysValues[i];
@@ -136,9 +125,6 @@ void loop() {
       lastJoysticDirection = -1;
       lastJoySwState = joySwitchValue;
       isJoystickNeutral = true;
-
-      // writeReg(byteEncodings[displaysValues[crtSelectedDisplay]]);
-      // activateDisplay(crtSelectedDisplay);
 
       longPressTimestamp = millis();
 
@@ -259,10 +245,6 @@ void initDisplaysValues () {
   }
 }
 
-void modifyDigitValue () {
-  Serial.println("digit changed!");
-}
-
 void writeReg(int digit) {
     // ST_CP LOW to keep LEDs from changing while reading serial data
     digitalWrite(latchPin, LOW);
@@ -280,28 +262,6 @@ void activateDisplay(int displayNumber) {
   }
 
   digitalWrite(displayDigits[displayNumber], LOW);
-}
-
-
-void writeNumber(int number) {
-  int currentNumber = number; 
-  int displayDigit = 0;
-  int lastDigit = 0;
-
-  while (currentNumber != 0) {
-    // get the last digit of the number
-    lastDigit = currentNumber % 10; // 3
-    // send the number to the display
-    writeReg(byteEncodings[lastDigit]);
-    // enable only the display digit for that 
-    activateDisplay(displayDigit);
-    // increase the delay to see multiplexing in action
-    delay(5);
-    // increment the display digit
-    displayDigit++;
-    // eliminate the last digit of the number
-    currentNumber /= 10;
-  }
 }
 
 int getDirectionFromJoystick (bool allowContinuousOnY) {
