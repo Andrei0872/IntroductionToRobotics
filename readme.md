@@ -8,6 +8,7 @@ Learning interesting stuff about robotics.
     - [Clean code thoughts](#clean-code-thoughts)
   - [Homework 3](#homework-3)
   - [Homework 4](#homework-4)
+  - [Homework 5](#homework-5)
   - [Useful resources](#useful-resources)
 
 ---
@@ -107,10 +108,23 @@ The set-up:
 
 The video showcasing the functionality can be found [here](https://youtube.com/shorts/RTMY486Oq6M?feature=share).
 
+---
+
+## Homework 5
+
+The code for this homework can be found [here](./homework/hw32/../hw5/hw5.ino).
+
+The set-up:
+
+<div style="text-align: center;">
+  <img src="./homework/hw5/assets/hw5.jpg">
+</div>
+
+The video showcasing the functionality can be found [here](https://youtu.be/XJ1ansnsYRw).
+
 
 ## Useful resources
 
 * https://roboticsbackend.com/arduino-uno-pins-a-complete-practical-guide/
 * https://www.autodesk.com/products/eagle/blog/how-does-ground-work-in-electronics/
 * [Arduino Tutorial 8: Understanding Pulse Width Modulation (PWM) and the Arduino Analog Write Command](https://www.youtube.com/watch?v=YfV-vYT3yfQ)
-
